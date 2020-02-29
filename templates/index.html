@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Poker App</title>
+</head>
+<body>
+    <form method="post" action="/">
+        {% csrf_token %}
+        Username: <input type="text" name="username" size="20">
+        Command: <input type="text" name="command" size="50"><br/>
+        <input type="submit">
+    </form>
+    {% if message == "admin menu" %}
+        <h3>Admin Menu!</h3>
+        <p>Please use format: username: command args(if needed).</p>
+        <p>List of commands:</p>
+        <pre>   - create_player     ex: username: create_player newusername</pre>
+        <pre>   - list_players</pre>
+        <pre>   - menu              ex: username: menu</pre>
+    {% elif message == "player menu"%}
+        {% if user.in_game %}
+            <h3>In-game Player Menu!</h3>
+            <p>Please use format: username: command args(if needed).</p>
+            <p>List of commands:</p>
+            <pre>   - start         ex: username: start</pre>
+            <pre>   - quit</pre>
+            <pre>   - see_their_cards</pre>
+            <pre>   - my_chips</pre>
+            <pre>   - call_amount</pre>
+            <pre>   - see_pot</pre>
+            <pre>   - raise</pre>
+            <pre>   - call</pre>
+            <pre>   - check</pre>
+            <pre>   - fold</pre>
+            <pre>   - see_cards_all</pre>
+        {% else %}
+            <h3>Lobby Player Menu!</h3>
+            <p>Please use format: username: command args(if needed).</p>
+            <p>List of commands:</p>
+            <pre>   - my_profile    ex: username: my_profile</pre>
+            <pre>   - new_game</pre>
+            <pre>   - join_game     ex: username: join_game gameid</pre>
+            <pre>   - see_available_games</pre>
+            <pre>   - top_scores</pre>
+        {% endif %}
+        <pre>   - my_balance</pre>
+        <pre>   - menu</pre>
+    {% else %}
+    <p>{{ message }}</p>
+    {% endif %}
+</body>
+</html>
